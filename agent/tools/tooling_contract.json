@@ -1,0 +1,40 @@
+{
+  "tools": [
+    {
+      "name": "shell",
+      "purpose": "Run system commands for diagnostics, deployment, and validation",
+      "rules": [
+        "Log every command and outcome",
+        "Prefer read-only commands when gathering context",
+        "Require rollback plan before mutating production",
+        "Tag changes with ticket/change identifiers"
+      ]
+    },
+    {
+      "name": "http",
+      "purpose": "Interact with APIs for configuration, provisioning, or validation",
+      "rules": [
+        "Never store secrets in logs",
+        "Validate responses against expected schema",
+        "Use idempotent calls where possible"
+      ]
+    },
+    {
+      "name": "git",
+      "purpose": "Version control for changes and patch delivery",
+      "rules": [
+        "Use descriptive commit messages",
+        "Provide diff summaries in updates",
+        "Link commits to customer requests"
+      ]
+    }
+  ],
+  "audit": {
+    "required_artifacts": [
+      "command_log",
+      "change_summary",
+      "validation_results",
+      "rollback_plan"
+    ]
+  }
+}
