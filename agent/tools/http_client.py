@@ -11,8 +11,13 @@ class HttpTool(BaseTool):
         if not url:
             return {"status": "skipped", "stdout": "", "stderr": "no url provided"}
         try:
-            resp = requests.request(method=method, url=url, data=data, timeout=10)
+            resp = requests.request(method=method, url=url, json=data, timeout=10)
             status = "ok" if resp.status_code < 400 else f"failed(status={resp.status_code})"
-            return {"status": status, "stdout": resp.text, "stderr": ""}
+            return {
+                "status": status,
+                "stdout": resp.text,
+                "stderr": "",
+                "meta": {"status_code": resp.status_code, "url": url, "method": method.upper()},
+            }
         except Exception as e:
             return {"status": "failed(exception)", "stdout": "", "stderr": str(e)}

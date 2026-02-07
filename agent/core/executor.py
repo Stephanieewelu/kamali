@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import List, Optional
+from dataclasses import dataclass, asdict
+from typing import Optional, List, Dict, Any
 
 from ..tools.shell import ShellTool
 from ..tools.http_client import HttpTool
@@ -12,18 +12,20 @@ from .planner import PlanStep
 @dataclass
 class ExecutionResult:
     description: str
-    command: Optional[str]
+    command: str
     status: str
     stdout: str
     stderr: str
+    meta: Optional[Dict[str, Any]] = None
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> Dict[str, Any]:
         return {
             "description": self.description,
             "command": self.command,
             "status": self.status,
             "stdout": self.stdout,
             "stderr": self.stderr,
+            "meta": self.meta,
         }
 
 
@@ -51,5 +53,12 @@ class ToolExecutor:
                     res = {"status": "skipped", "stdout": "", "stderr": f"Unknown command: {cmd}"}
             except Exception as e:
                 res = {"status": "failed(exception)", "stdout": "", "stderr": str(e)}
-            executed.append(ExecutionResult(s.description, cmd, res.get("status", "skipped"), res.get("stdout", ""), res.get("stderr", "")))
+            executed.append(ExecutionResult(
+                s.description,
+                cmd,
+                res.get("status", "skipped"),
+                res.get("stdout", ""),
+                res.get("stderr", ""),
+                res.get("meta")
+            ))
         return executed
