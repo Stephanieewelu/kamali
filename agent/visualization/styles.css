@@ -1,0 +1,158 @@
+:root {
+  color-scheme: light;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  --bg: #f5f7fb;
+  --panel: #ffffff;
+  --text: #14213d;
+  --muted: #5c677d;
+  --accent: #2563eb;
+  --accent-soft: #e0e7ff;
+  --border: #e2e8f0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.hero {
+  background: linear-gradient(135deg, #1e3a8a, #1d4ed8 45%, #2563eb);
+  color: #f8fafc;
+  padding: 48px 0 64px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-top: 12px;
+}
+
+.subtitle {
+  margin-top: 12px;
+  max-width: 720px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.chips span {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 28px;
+  margin-top: 32px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.panel h2 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+}
+
+.flow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.node {
+  background: var(--accent-soft);
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid #c7d2fe;
+}
+
+.node h3 {
+  font-size: 1.05rem;
+  margin-bottom: 6px;
+}
+
+.meta {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.connector {
+  text-align: center;
+  font-size: 1.3rem;
+  color: var(--accent);
+}
+
+.grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.list {
+  margin-top: 12px;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.list li {
+  margin-bottom: 10px;
+}
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 16px;
+}
+
+.timeline h3 {
+  margin-bottom: 6px;
+  color: var(--accent);
+}
+
+.footer {
+  padding: 12px 0 32px;
+  color: var(--muted);
+}
+
+@media (max-width: 720px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .connector {
+    display: none;
+  }
+}
