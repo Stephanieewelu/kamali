@@ -1,0 +1,65 @@
+{
+  "time": "2026-02-07T15:13:32Z",
+  "agent": "Forward Deployed Engineer (FDE)",
+  "summary": {
+    "request": "Deploy a new feature to staging",
+    "assumptions": "staging available; approvals required for production changes; rollback planned.",
+    "outcome_target": "validated, reversible steps and documented artifacts."
+  },
+  "plan": [
+    {
+      "description": "Analyze 'Deploy a new feature to staging' requirements",
+      "command": "analyze_requirements",
+      "expected_outcome": "requirements_document"
+    },
+    {
+      "description": "Develop plan for 'Deploy a new feature to staging'",
+      "command": "develop_plan",
+      "expected_outcome": "detailed_plan"
+    },
+    {
+      "description": "Execute plan for 'Deploy a new feature to staging' in staging",
+      "command": "execute_plan",
+      "expected_outcome": "successful_execution"
+    }
+  ],
+  "status": {
+    "current": "IDLE",
+    "next_checkpoint": "Discovery complete and approvals obtained."
+  },
+  "risks": [
+    {
+      "description": "Incomplete requirements",
+      "level": "Medium"
+    },
+    {
+      "description": "Unexpected environment issues",
+      "level": "High"
+    },
+    {
+      "description": "Rollback failure",
+      "level": "High"
+    }
+  ],
+  "next_steps": [
+    "Confirm environment readiness (runbooks/environment_validation.md)",
+    "Validate access and MFA (runbooks/access_setup.md)",
+    "Set up observability and alerts (runbooks/observability_setup.md)",
+    "Draft change request with milestones, validation, and rollback"
+  ],
+  "references": [
+    "playbooks/integration_delivery.md",
+    "playbooks/deployment_hardening.md",
+    "runbooks/environment_validation.md",
+    "templates/customer_intake.md",
+    "templates/change_request.md",
+    "checklists/go_live.md",
+    "checklists/security_review.md"
+  ],
+  "tooling_contract": [
+    "shell: Run system commands for diagnostics, deployment, and validation",
+    "http: Interact with APIs for configuration, provisioning, or validation",
+    "git: Version control for changes and patch delivery"
+  ],
+  "rollback_command": "revert_last_change --ticket_id TICKET-4A5A19"
+}

@@ -1,29 +1,18 @@
-from dataclasses import dataclass
-from typing import Optional
+from __future__ import annotations
 
-from git import Repo
+import subprocess
+from typing import Optional, List
 
-
-@dataclass
-class GitStatus:
-    branch: str
-    dirty: bool
-    details: str
+from .base import BaseTool
 
 
-class GitOperations:
-    def __init__(self, repo_path: str = ".") -> None:
-        self.repo = Repo(repo_path, search_parent_directories=True)
-
-    def status(self) -> GitStatus:
-        branch = self.repo.active_branch.name
-        dirty = self.repo.is_dirty()
-        details = self.repo.git.status("-sb")
-        return GitStatus(branch=branch, dirty=dirty, details=details)
-
-    def commit(self, message: str) -> Optional[str]:
-        if not self.repo.is_dirty():
-            return None
-        self.repo.git.add(all=True)
-        commit = self.repo.index.commit(message)
-        return commit.hexsha
+class GitTool(BaseTool):
+    def run(self, args: Optional[List[str]] = None) -> dict:
+        if not args:
+            return {"status": "skipped", "stdout": "", "stderr": "no git args provided"}
+        try:
+            proc = subprocess.run(["git", *args], capture_output=True, text=True)
+            status = "ok" if proc.returncode == 0 else f"failed(code={proc.returncode})"
+            return {"status": status, "stdout": proc.stdout, "stderr": proc.stderr}
+        except Exception as e:
+            return {"status": "failed(exception)", "stdout": "", "stderr": str(e)}

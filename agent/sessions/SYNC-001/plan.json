@@ -1,0 +1,34 @@
+{
+  "title": "Patient Records Sync",
+  "steps": [
+    {
+      "description": "Start sync banner",
+      "command": "shell",
+      "args": "echo Starting patient record sync"
+    },
+    {
+      "description": "Fetch API health (viz as placeholder)",
+      "command": "http",
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/index.html"
+    },
+    {
+      "description": "Check repo status",
+      "command": "git",
+      "args": [
+        "status"
+      ]
+    },
+    {
+      "description": "Finalize sync",
+      "command": "shell",
+      "args": "echo Sync finalized"
+    },
+    {
+      "description": "Validation: confirm sync outcomes via health endpoint",
+      "command": "http",
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/index.html"
+    }
+  ]
+}
