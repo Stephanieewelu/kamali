@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FDE Agent Deployment Visualization</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="container">
+        <p class="eyebrow">Forward Deployed Engineer Agent</p>
+        <h1>Deployment Visualization</h1>
+        <p class="subtitle">
+          A production-ready flow that shows how discovery turns into delivery, incident response,
+          and operational handoff.
+        </p>
+        <div class="chips">
+          <span>Discovery</span>
+          <span>Plan</span>
+          <span>Deliver</span>
+          <span>Operate</span>
+          <span>Improve</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="panel">
+        <h2>End-to-end deployment flow</h2>
+        <p>
+          This map shows how the agent moves from intake to production support with explicit safety
+          gates, audits, and customer communications.
+        </p>
+        <div class="flow">
+          <div class="node">
+            <h3>Customer Intake</h3>
+            <p>Capture goals, constraints, and success criteria.</p>
+            <span class="meta">Template: customer_intake.md</span>
+          </div>
+          <div class="connector">→</div>
+          <div class="node">
+            <h3>Plan & Approvals</h3>
+            <p>Define milestones, validation checks, and rollback.</p>
+            <span class="meta">Template: change_request.md</span>
+          </div>
+          <div class="connector">→</div>
+          <div class="node">
+            <h3>Delivery & Hardening</h3>
+            <p>Integrate, migrate, and harden with observability.</p>
+            <span class="meta">Playbooks + Runbooks</span>
+          </div>
+          <div class="connector">→</div>
+          <div class="node">
+            <h3>Go-Live</h3>
+            <p>Validate readiness, security review, and sign-off.</p>
+            <span class="meta">Checklist: go_live.md</span>
+          </div>
+          <div class="connector">→</div>
+          <div class="node">
+            <h3>Operate & Improve</h3>
+            <p>Run incident response, postmortems, and updates.</p>
+            <span class="meta">incident_response.md</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel grid">
+        <div>
+          <h2>Deployment readiness gates</h2>
+          <ul class="list">
+            <li>Access setup completed and MFA validated</li>
+            <li>Observability dashboard and alerts verified</li>
+            <li>Rollback plan tested with runbook steps</li>
+            <li>Security review and compliance checks approved</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Audit artifacts</h2>
+          <ul class="list">
+            <li>Command log with change identifiers</li>
+            <li>Validation results and acceptance sign-off</li>
+            <li>Change summary and rollback procedures</li>
+            <li>Postmortems and weekly customer updates</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Operational cadence</h2>
+        <div class="timeline">
+          <div>
+            <h3>Daily</h3>
+            <p>Status updates, validation checks, and risk surfacing.</p>
+          </div>
+          <div>
+            <h3>Weekly</h3>
+            <p>Customer-facing progress report and roadmap alignment.</p>
+          </div>
+          <div>
+            <h3>On Incident</h3>
+            <p>60-minute update cadence with documented mitigations.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>Use this visualization alongside the playbooks and runbooks in the agent folder.</p>
+      </div>
+    </footer>
+  </body>
+</html>
