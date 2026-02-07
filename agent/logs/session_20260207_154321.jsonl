@@ -1,0 +1,97 @@
+{
+  "time": "2026-02-07T15:43:21Z",
+  "agent": "Forward Deployed Engineer (FDE)",
+  "summary": {
+    "request": "Deploy new feature X",
+    "assumptions": "staging available; approvals required for production changes; rollback planned.",
+    "outcome_target": "validated, reversible steps and documented artifacts."
+  },
+  "plan": [
+    {
+      "category": "Pre-flight",
+      "description": "Fetch latest changes for 'Deploy new feature X'",
+      "command": "git fetch",
+      "expected_outcome": "local_repo_updated"
+    },
+    {
+      "category": "Pre-flight",
+      "description": "Check endpoint health for 'Deploy new feature X'",
+      "command": "check_endpoint_health",
+      "expected_outcome": "endpoints_healthy"
+    },
+    {
+      "category": "Deployment",
+      "description": "Apply manifest for 'Deploy new feature X'",
+      "command": "apply_manifest",
+      "expected_outcome": "manifest_applied"
+    },
+    {
+      "category": "Deployment",
+      "description": "Update configuration for 'Deploy new feature X' in staging",
+      "command": "update_config",
+      "expected_outcome": "config_updated"
+    },
+    {
+      "category": "Validation",
+      "description": "Run integration tests for 'Deploy new feature X'",
+      "command": "run_integration_tests",
+      "expected_outcome": "tests_passed"
+    },
+    {
+      "category": "Validation",
+      "description": "Verify 'Deploy new feature X' functionality with curl",
+      "command": "curl -f",
+      "expected_outcome": "functionality_verified"
+    },
+    {
+      "category": "Post-flight",
+      "description": "Notify Slack channel about 'Deploy new feature X' deployment",
+      "command": "notify_slack",
+      "expected_outcome": "slack_notified"
+    },
+    {
+      "category": "Post-flight",
+      "description": "Archive logs for 'Deploy new feature X' deployment",
+      "command": "archive_logs",
+      "expected_outcome": "logs_archived"
+    }
+  ],
+  "status": {
+    "current": "IDLE",
+    "next_checkpoint": "Discovery complete and approvals obtained."
+  },
+  "risks": [
+    {
+      "description": "Incomplete requirements",
+      "level": "Medium"
+    },
+    {
+      "description": "Unexpected environment issues",
+      "level": "High"
+    },
+    {
+      "description": "Rollback failure",
+      "level": "High"
+    }
+  ],
+  "next_steps": [
+    "Confirm environment readiness (runbooks/environment_validation.md)",
+    "Validate access and MFA (runbooks/access_setup.md)",
+    "Set up observability and alerts (runbooks/observability_setup.md)",
+    "Draft change request with milestones, validation, and rollback"
+  ],
+  "references": [
+    "playbooks/integration_delivery.md",
+    "playbooks/deployment_hardening.md",
+    "templates/customer_intake.md",
+    "templates/change_request.md",
+    "checklists/go_live.md",
+    "checklists/security_review.md"
+  ],
+  "tooling_contract": [
+    "shell: Run system commands for diagnostics, deployment, and validation",
+    "http: Interact with APIs for configuration, provisioning, or validation",
+    "git: Version control for changes and patch delivery"
+  ],
+  "rollback_command": "revert_last_change --ticket_id TEST-003"
+}

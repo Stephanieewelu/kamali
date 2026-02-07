@@ -147,6 +147,87 @@ h1 {
   color: var(--muted);
 }
 
+/* Tester UI */
+.tester {
+  margin-top: 12px;
+}
+
+.input-area {
+  width: 100%;
+  min-height: 120px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  color: var(--text);
+  background: #fff;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.2);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.toggle {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.result {
+  margin-top: 20px;
+}
+
+.result-header {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+}
+
+.result-json {
+  display: none;
+  background: #0b1020;
+  color: #e5e7eb;
+  padding: 16px;
+  border-radius: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  overflow: auto;
+  max-height: 420px;
+}
+
+.hidden { display: none; }
+
 @media (max-width: 720px) {
   h1 {
     font-size: 2rem;

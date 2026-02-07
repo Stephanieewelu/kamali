@@ -103,6 +103,23 @@
           </div>
         </div>
       </section>
+
+      <!-- Interactive Tester -->
+      <section class="panel">
+        <h2>Test the Agent</h2>
+        <p>Describe a task and generate a structured plan, risks, and next steps.</p>
+        <div class="tester">
+          <textarea id="task-input" class="input-area" rows="6" placeholder="e.g., Plan observability setup for staging"></textarea>
+          <div class="actions">
+            <button id="run-btn" class="btn">Generate Plan</button>
+            <label class="toggle"><input type="checkbox" id="json-toggle" /> JSON output</label>
+          </div>
+          <div id="result" class="result hidden">
+            <pre id="result-json" class="result-json"></pre>
+            <div id="result-content" class="result-content"></div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
@@ -110,5 +127,146 @@
         <p>Use this visualization alongside the playbooks and runbooks in the agent folder.</p>
       </div>
     </footer>
+
+    <script>
+      function chooseReferences(task) {
+        const t = task.toLowerCase();
+        const refs = [];
+        if (["incident","outage","sev","mitigate"].some(k => t.includes(k))) {
+          refs.push("playbooks/incident_response.md");
+        }
+        if (["migrate","migration","data move","cutover"].some(k => t.includes(k))) {
+          refs.push("playbooks/data_migration.md");
+        }
+        if (["deploy","delivery","integration","harden"].some(k => t.includes(k))) {
+          refs.push("playbooks/integration_delivery.md","playbooks/deployment_hardening.md");
+        }
+        if (["observe","monitor","alerts","metrics","dashboard"].some(k => t.includes(k))) {
+          refs.push("runbooks/observability_setup.md");
+        }
+        if (["access","credential","permission","mfa"].some(k => t.includes(k))) {
+          refs.push("runbooks/access_setup.md");
+        }
+        if (["validate","compatibility","dry-run","staging"].some(k => t.includes(k))) {
+          refs.push("runbooks/environment_validation.md");
+        }
+        refs.push(
+          "templates/customer_intake.md",
+          "templates/change_request.md",
+          "checklists/go_live.md",
+          "checklists/security_review.md"
+        );
+        const seen = new Set();
+        return refs.filter(r => { if (seen.has(r)) return false; seen.add(r); return true; });
+      }
+
+      function buildStructured(task) {
+        const now = new Date().toISOString().replace(/\.\d+Z$/, 'Z');
+        return {
+          time: now,
+          agent: "Forward Deployed Engineer (FDE)",
+          summary: {
+            request: task,
+            assumptions: "staging available; approvals required for production changes; rollback planned.",
+            outcome_target: "validated, reversible steps and documented artifacts."
+          },
+          plan: [
+            "Discovery: confirm goals, success criteria, constraints, timeline (templates/customer_intake.md).",
+            "Approvals: prepare change request with validation and rollback (templates/change_request.md).",
+            "Delivery: execute in staging first; capture artifacts and logs (playbooks + runbooks).",
+            "Validation: explicit checks tied to success criteria; record results.",
+            "Handoff: provide runbooks, monitoring guidance, and escalation path."
+          ],
+          status: { current: "Planning", next_checkpoint: "Discovery complete and approvals obtained." },
+          risks: [
+            "Environment mismatch, access gaps, or missing rollback.",
+            "Production impact without a change window or validation.",
+            "Security/compliance controls not fully validated."
+          ],
+          next_steps: [
+            "Confirm environment readiness (runbooks/environment_validation.md)",
+            "Validate access and MFA (runbooks/access_setup.md)",
+            "Set up observability and alerts (runbooks/observability_setup.md)",
+            "Draft change request with milestones, validation, and rollback"
+          ],
+          references: chooseReferences(task)
+        };
+      }
+
+      function renderHtml(d) {
+        const references = d.references.map(r => `<li>${r}</li>`).join('');
+        const plan = d.plan.map(p => `<li>${p}</li>`).join('');
+        const risks = d.risks.map(r => `<li>${r}</li>`).join('');
+        const next = d.next_steps.map(n => `<li>${n}</li>`).join('');
+        return `
+          <div class="result-header">
+            <div><strong>Time:</strong> ${d.time}</div>
+            <div><strong>Agent:</strong> ${d.agent}</div>
+          </div>
+          <div class="result-grid">
+            <div class="card">
+              <h3>Summary</h3>
+              <ul class="list">
+                <li><strong>Request:</strong> ${d.summary.request}</li>
+                <li><strong>Assumptions:</strong> ${d.summary.assumptions}</li>
+                <li><strong>Outcome:</strong> ${d.summary.outcome_target}</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Plan</h3>
+              <ul class="list">${plan}</ul>
+            </div>
+            <div class="card">
+              <h3>Status</h3>
+              <ul class="list">
+                <li><strong>Current:</strong> ${d.status.current}</li>
+                <li><strong>Next checkpoint:</strong> ${d.status.next_checkpoint}</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Risks</h3>
+              <ul class="list">${risks}</ul>
+            </div>
+            <div class="card">
+              <h3>Next Steps</h3>
+              <ul class="list">${next}</ul>
+            </div>
+            <div class="card">
+              <h3>References</h3>
+              <ul class="list">${references}</ul>
+            </div>
+          </div>
+        `;
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const input = document.getElementById('task-input');
+        const runBtn = document.getElementById('run-btn');
+        const jsonToggle = document.getElementById('json-toggle');
+        const result = document.getElementById('result');
+        const resultContent = document.getElementById('result-content');
+        const resultJson = document.getElementById('result-json');
+
+        runBtn.addEventListener('click', () => {
+          const task = input.value.trim();
+          if (!task) {
+            input.focus();
+            return;
+          }
+          const data = buildStructured(task);
+          const useJson = jsonToggle.checked;
+          result.classList.remove('hidden');
+          if (useJson) {
+            resultJson.textContent = JSON.stringify(data, null, 2);
+            resultJson.style.display = 'block';
+            resultContent.style.display = 'none';
+          } else {
+            resultJson.style.display = 'none';
+            resultContent.style.display = 'block';
+            resultContent.innerHTML = renderHtml(data);
+          }
+        });
+      });
+    </script>
   </body>
 </html>

@@ -1,0 +1,18 @@
+{
+  "time": "2026-02-07T15:26:00Z",
+  "agent": "Forward Deployed Engineer (FDE)",
+  "summary": {
+    "request": "Generate a powerpoint for a client who wants to deploy an healthcare pitch",
+    "outcome_target": "Action aborted due to scope mismatch. The agent is designed for technical tasks, not administrative content creation."
+  },
+  "status": {
+    "current": "ABORTED",
+    "next_checkpoint": "N/A"
+  },
+  "risks": [],
+  "next_steps": [],
+  "references": [],
+  "tooling_contract": [],
+  "rollback_command": "N/A",
+  "warning_panel": "<rich.panel.Panel object at 0x000001357FCDAE40>"
+}
